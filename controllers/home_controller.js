@@ -1,9 +1,16 @@
 module.exports.home = function(req, res){
-    console.log(req.cookies);
-    res.cookie('user_id', 25);
-    return res.render('home', {
-        title: "Home"
-    });
+    let Posts = require('../models/post');
+    Posts.find({user:req.user._id}, function(err, data){
+        if(err){
+            console.log("Error finding user's posts");
+            return res.render('home',{title:"Home"})
+        }
+        else{
+            console.log("Found some data "+ data[0].content)
+            return res.render('home',{title:"Home", 'posts':data});
+        }
+    }) 
+    
 }
 
 
