@@ -9,13 +9,19 @@
         <textarea name="content" placeholder="Type here..." rows="5" cols="20" required></textarea>
         <input type="submit" value="Post">
     </form>
+    <div>
     <ul>
-        <% for(let i=0;i<posts.length;i++){%>
-            <li>
-                <%= posts[i].content%>
-            </li>
+        <% for(let i of posts){%>
+            <p>
+                <li>
+                    <%= i.content%>
+                    <br>
+                    <%= i.user.name%>
+                </li>
+            </p>
         <%}%>
     </ul>
+</div> 
     
     
 </section>
