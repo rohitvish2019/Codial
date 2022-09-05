@@ -4,7 +4,7 @@ module.exports.addPost= function(req, res){
     let Post = require('../models/post');
     Post.create({
         content: req.body.content,
-        user: req.body.user
+        user: req.user._id
     }, function(err){
         if(err){
             console.log("Error creating post");
