@@ -1,4 +1,14 @@
 
-        <h1>
-            Codeial / <%= title %>
-        </h1>
+<h1>
+    Codeial / <%= title %>
+</h1>
+
+<section>
+    <h4>Post</h4>
+    <form method="POST" action="/post/create">
+        <textarea name="content" placeholder="Type here..." rows="5" cols="20" required></textarea>
+        <input type="submit" value="Post">
+        <input name="user" value="<%=user.id%>" hidden>
+    </form>
+    
+</section>
