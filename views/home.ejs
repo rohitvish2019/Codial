@@ -14,9 +14,16 @@
         <% for(let i of posts){%>
             <p>
                 <li>
-                    <%= i.content%>
-                    <br>
-                    <%= i.user.name%>
+                    <h3><%= i.content%></h3>
+
+                    <h4><%= i.user.name%></h4>
+
+                    <form method="POST" action = "/comment/create">
+                        <input type = "text" name="content">
+                        <input type="submit" value="Comment">
+                        <input type = "text" value="<%=i._id%>" hidden name="post">
+                    </form>
+                    
                 </li>
             </p>
         <%}%>
