@@ -56,11 +56,11 @@ passport.checkAuthentication = function (request, response, next){
         return next();
     }
     else{
-        return response.redirect('/login');
+        return response.redirect('/users/sign-in');
     }
 }
 
-passport.setAuthenticatedUser() = function(request, response, next){
+passport.setAuthenticatedUser = function(request, response, next){
     if(request.isAuthenticated()){
         response.locals.user = request.user;
     }
