@@ -1,7 +1,7 @@
+const Comments = require('../models/comment');
+const Post = require('../models/post');
 module.exports.createComment = function(req, res){
     console.log(req.body);
-    const Comments = require('../models/comment');
-    const Post = require('../models/post');
     Post.findById(req.body.post, function(err, post){
         if(err){
             console.log("Invalid post to comment");
@@ -27,4 +27,18 @@ module.exports.createComment = function(req, res){
     })
     
     return res.redirect("back");
+}
+
+
+module.exports.deleteComment = function(req, res){
+    Comments.findById(req.params.id, function(err, comment){
+        if(comment.user == req.user.id){
+            Post.findByIdAndUpdate( comment.post, { $pull : {'comment':req.params.id}}, function(err, post){
+                console.log("Error delete comments reference");
+            });
+            comment.remove();
+        }
+
+        return res.redirect('back');
+    })
 }

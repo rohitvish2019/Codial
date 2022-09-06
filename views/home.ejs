@@ -4,29 +4,18 @@
 </h1>
 
 <section>
-    <h4>Post</h4>
-    <form method="POST" action="/post/create">
-        <textarea name="content" placeholder="Type here..." rows="5" cols="20" required></textarea>
-        <input type="submit" value="Post">
-    </form>
+    <%if(locals.user){%>
+        <h4>Post</h4>
+        <form method="POST" action="/post/create">
+            <textarea name="content" placeholder="Type here..." rows="5" cols="20" required></textarea>
+            <input type="submit" value="Post">
+        </form>
+    <%}%>
     <div>
     <ul>
-        <% for(let i of posts){%>
-            <p>
-                <li>
-                    <h3><%= i.content%></h3>
-
-                    <h4><%= i.user.name%></h4>
-
-                    <form method="POST" action = "/comment/create">
-                        <input type = "text" name="content">
-                        <input type="submit" value="Comment">
-                        <input type = "text" value="<%=i._id%>" hidden name="post">
-                    </form>
-                    
-                </li>
-            </p>
-        <%}%>
+        
+            <%-include ('_post')%>
+        
     </ul>
 </div> 
     
