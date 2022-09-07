@@ -2,3 +2,23 @@ body{
     margin: 0;
     /* text-align: center; */
 }
+
+.main-container{
+    display: flex;
+    
+    justify-content: space-between;
+}
+
+.main-container .home-container{
+    padding: 10px;
+    width: 70%;
+    margin: 2%;
+    border: 1px dotted gray;
+}
+
+.main-container .friends-container{
+    width: 30%;
+    padding: 10px;
+    margin: 2%;
+    border: 1px dotted gray;
+}
