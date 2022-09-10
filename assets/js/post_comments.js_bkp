@@ -1,0 +1,10 @@
+{   
+    //method to send AJAX request to server
+    console.log('comments');
+    function createComment(){
+        
+
+    }
+    createComment();
+    // method to create comment in DOM
+}

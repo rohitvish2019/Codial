@@ -2,6 +2,7 @@
 <h1>
     Codeial / <%= title %>
 </h1>
+<link rel="stylesheet" href="/css/post-style.css">
 <div class="main-container">
     
 
@@ -9,48 +10,15 @@
         
         <%if(locals.user){%>
             <h4>Post</h4>
-            <form method="POST" action="/post/create">
-                <textarea name="content" placeholder="Type here..." rows="5" cols="20" required></textarea>
+            <form method="POST" action="/post/create" id="new-post-form">
+                <textarea id="post-input" name="content" placeholder="Type here..." rows="5" cols="20" required></textarea>
                 <input type="submit" value="Post">
             </form>
         <%}%>
         <div>
             <h1>Your feed</h1>
-            <ul>
-                <% for(let post of posts){%>
-                    <p>
-                        <li style="border: 1px solid black ; text-align:  center; list-style: none;">
-                            <h3>
-                                <%= post.content%>
-                                <%if(locals.user && locals.user.id == post.user.id){%>
-                                <a href="/post/delete/<%=post.id%>">Delete</a>
-                                <%}%>
-                            </h3>
-                            <h4><%= post.user.name%></h4>
-                            <%if(locals.user){%>
-                                <form method="POST" action = "/comment/create">
-                                    <input type = "text" name="content">
-                                    <input type="submit" value="Comment">
-                                    <input type = "text" value="<%=post._id%>" hidden name="post">
-                                </form>
-                            <%}%>
-                            <div>
-                                <% for( comment of post.comment) { %>
-                                    <p>
-                                        <%= comment.content%>
-                                        =>
-                                        <small><%= comment.user.name%></small>
-                                        ||
-                                        <%if(locals.user && locals.user.id == comment.user.id){%>
-                                            <small><a href="/comment/delete/<%= comment.id%>">delete</a></small>
-                                        <%}%>
-                                    </p>
-                                <%}%>
-                            </div>
-                        </li>
-                    </p>
-                <%}%>
-            
+            <ul id="posts-list">
+                <%- include('_posts')%>
             </ul>
         </div> 
     </section>
@@ -65,4 +33,6 @@
         <%}%>
         
     </section>
+    <script src="/js/home_posts.js"></script>
+    <script src = "/js/post_comments.js"></script>
 </div>
