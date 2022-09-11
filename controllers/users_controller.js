@@ -97,9 +97,33 @@ module.exports.destroySession = function(request, response){
 }
 
 module.exports.update = async function(req, res){
+    let fs = require('fs');
+    let path = require('path');
     try{
         if(req.user._id == req.params.id){
-            await User.findByIdAndUpdate(req.user._id, {name: req.body.name, email: req.body.email});
+            //let user = await User.findByIdAndUpdate(req.user._id, {name: req.body.name, email: req.body.email});
+            let user = await User.findById(req.user._id);
+            console.log(user.name);
+            console.log(user.email);
+            User.uploadedAvatar(req, res, function(err){
+                if(err){console.log("********-MULTER ERROR-*********"+err); return;}
+                user.name = req.body.name;
+                user.email = req.body.email;
+
+                if(req.file){
+                    if(user.avatar != null){
+                        try{
+                            fs.unlinkSync(path.join(__dirname,'..' ,user.avatar));
+                        }catch(err){
+                            console.log('Unable to delete from FileSystem');
+                        }
+                        
+                    }
+                    user.avatar = User.avatarPath + req.file.filename;
+                }
+
+                user.save();
+            });
             return res.redirect('back');
         }
     }catch(err){
