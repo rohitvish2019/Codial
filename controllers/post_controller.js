@@ -38,11 +38,9 @@ module.exports.deletePost = async function(req, res){
 
 module.exports.deletePostViaAjax =async function(req, res){
     let thisID = req.body.id.slice(7)
-    console.log(thisID);
     try{
         let post = await Post.findById(thisID);
         if(post.user == req.user.id){
-            console.log("removing post")
             post.remove();
             await Comment.deleteMany({ post: thisID});
             return res.status(200).json({
