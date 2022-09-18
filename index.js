@@ -11,7 +11,7 @@ const passportLocal = require('./config/passport-local-strategy');
 const passportJWT = require('./config/passport-jwt-strategy');
 const passportGoogle = require('./config/passport-google-strategy');
 const MongoStore = require('connect-mongo');
-const kue = require('kue');
+//const kue = require('kue');
 
 
 app.use(express.urlencoded());

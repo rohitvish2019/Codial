@@ -46,6 +46,7 @@ console.log("home js loaded");
             <input type="submit" value="Comment">
             <input type = "text" value="${data.post._id}" hidden name="post">
         </form>
+        <a href="/post/like/${data.post._id}">Like Post</a>
         
         `;
         postItem.classList.add('post-item');

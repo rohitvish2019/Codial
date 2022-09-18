@@ -1,6 +1,7 @@
 let Post = require('../models/post');
 let Comment = require('../models/comment');
 let User = require('../models/user');
+const Like = require('../models/like');
 module.exports.addPost= async function(req, res){
     try{
         let post = await Post.create({
@@ -38,11 +39,13 @@ module.exports.deletePost = async function(req, res){
 
 module.exports.deletePostViaAjax =async function(req, res){
     let thisID = req.body.id.slice(7)
+    console.log(thisID);
     try{
         let post = await Post.findById(thisID);
         if(post.user == req.user.id){
             post.remove();
             await Comment.deleteMany({ post: thisID});
+            await Like.deleteMany({likable: thisID});
             return res.status(200).json({
                 data: {
                     id:req.body.id,
@@ -54,4 +57,41 @@ module.exports.deletePostViaAjax =async function(req, res){
         console.log("Error "+err);
         return res.redirect('back');
     }
+}
+
+module.exports.addLikeToPost = async function(req, res){
+    console.log("Reached to like post")
+    let count = 0;
+    let post = await Post.findById(req.params.id).populate('like').populate('user');
+    let likesCount = post.like.length;
+    try{
+        for(let i=0;i<likesCount;i++){
+            if(post.like[i].user == req.user.id){
+                let idToDelete = post.like[i]._id;
+                await Post.findByIdAndUpdate( post._id, { $pull : {'like':idToDelete}});
+                await Like.findByIdAndDelete(idToDelete);
+                return res.redirect('back');
+            }else{
+                count++;
+            }
+        }
+    }catch(err){
+        console.log("Error removing like "+err);
+    }
+    
+    try{
+        if(count == likesCount){
+            let like = await Like.create({
+                user:req.user.id,
+                likable: post._id,
+                onModel:'Post'
+            });
+            post.like.push(like._id);
+            await post.save();
+        }
+    }catch(err){
+        console.log("Error adding a like "+err)
+    }
+    return res.redirect('back')
+    
 }

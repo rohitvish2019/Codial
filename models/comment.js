@@ -16,7 +16,12 @@ commentSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Post',
         required:true
-    }
+    },
+    like:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Like',
+        required:true
+    }]
     },
 {
     timestamp:true

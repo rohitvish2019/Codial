@@ -5,3 +5,8 @@
 <%if(locals.user && locals.user.id == comment.user.id){%>
     <small><a id="delete-comment" href="/comment/delete/<%= comment.id%>">delete</a></small>
 <%}%>
+
+<%if(locals.user){%>
+    <small><a id="like-comment" href="/comment/like/<%= comment.id%>">Like</a></small>
+    <span><%= comment.like.length%></span>
+<%}%>

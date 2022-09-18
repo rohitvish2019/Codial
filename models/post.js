@@ -15,6 +15,11 @@ const postSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Comment',
         required: true
+    }],
+
+    like:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Like'
     }]
 },
 {
