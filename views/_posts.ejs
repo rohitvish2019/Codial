@@ -9,7 +9,7 @@
         </h3>
         <h4><%= post.user.name%></h4>
         <%if(locals.user){%>
-            <form method="POST" action = "/comment/create" id="comments-form-<%=post.id%>" >
+            <form method="POST" action = "/comment/create" id="createNewComment">
                 <input type = "text" name="content" id="comment-input">
                 <input type="submit" value="Comment">
                 <input type = "text" value="<%=post._id%>" hidden name="post">

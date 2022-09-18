@@ -1,0 +1,16 @@
+const nodemailer = require("../config/nodemailer")
+
+exports.newComment = (comment, useremail, postusername) =>{
+    console.log("email is "+useremail);
+    console.log(comment);
+    let htmlfile = nodemailer.renderedTemplate({comment: comment, postusername:postusername},'new_comment.ejs');
+    nodemailer.transporter.sendMail({
+        from : 'rohitvish288@gmail.com',
+        to: useremail,
+        subject : 'Your comment is published',
+        html: htmlfile
+    }, (err, info) => {
+        if(err){console.log("Error sending email "+err); return;}
+        console.log("message sent successfully" + info);
+    })    
+}

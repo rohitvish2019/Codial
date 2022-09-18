@@ -1,4 +1,4 @@
-
+console.log("home js loaded");
 
 {
     //method to send data to serve using AJAX
@@ -41,7 +41,7 @@
         </h3>
         <h4>${data.username}</h4>
        
-        <form method="POST" action = "/comment/create" id="comments-form-${data.post._id}">
+        <form class = "createComment" method="POST" action = "/comment/create" id="comments-form-${data.post._id}">
             <input type = "text" name="content">
             <input type="submit" value="Comment">
             <input type = "text" value="${data.post._id}" hidden name="post">

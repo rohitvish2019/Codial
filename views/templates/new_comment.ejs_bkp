@@ -1,0 +1,8 @@
+<h3>Hi <%=postusername%></h3>
+<br>
+
+<p>Your comment <strong><%=comment.content%></strong> has been published on codial</p>
+
+<br>
+<p>Thanks & Regards</p>
+<p>Team Codial</p>

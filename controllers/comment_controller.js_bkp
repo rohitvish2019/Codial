@@ -2,8 +2,6 @@ const Comments = require('../models/comment');
 const Post = require('../models/post');
 const User = require('../models/user');
 const commentsMailer = require('../mailers/comment_mailer');
-const commentEmailWorker = require('../workers/comment_email_worker');
-const queue = require('../config/kue');
 module.exports.createComment =async function(req, res){
     try{
         let post = await Post.findById(req.body.post);
@@ -15,16 +13,13 @@ module.exports.createComment =async function(req, res){
             });
             post.comment.push(comment._id);
             await post.save();
+            let commentedBy = await User.findById(comment.user, 'name email');
             let commentedPostUser = await User.findById(post.user, 'name email');
             if(req.xhr){
                 console.log("This is a xhr request");
             }else{
-                let thisComment = await Comments.findById(comment._id).populate('user');
                 console.log("normal request");
-                let job = queue.createJob('email', thisComment).save(function(err){
-                    if(err){console.log("Error creating job "+err); return;}
-                    console.log("job enqueued "+job.id);
-                })
+                commentsMailer.newComment(comment, commentedBy.email, commentedPostUser.name );
                 return res.redirect('back')
             }
         }
